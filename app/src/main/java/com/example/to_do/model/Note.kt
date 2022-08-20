@@ -9,23 +9,23 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Note(
-    @PrimaryKey(autoGenerate = true) val uid: Int,
+    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
     @NonNull @ColumnInfo(name = "text") val text: String,
-    @NonNull @ColumnInfo(name = "time_stamp") val timeStamp: Int,
-    @NonNull @ColumnInfo(name = "done") val done: Boolean
+    @NonNull @ColumnInfo(name = "time_stamp") val timeStamp: Long,
+    @NonNull @ColumnInfo(name = "done") var done: Boolean
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",
-        parcel.readInt(),
+        parcel.readLong(),
         parcel.readByte() != 0.toByte()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(uid)
         parcel.writeString(text)
-        parcel.writeInt(timeStamp)
+        parcel.writeLong(timeStamp)
         parcel.writeByte(if (done) 1 else 0)
     }
 
@@ -42,5 +42,4 @@ data class Note(
             return arrayOfNulls(size)
         }
     }
-
 }
