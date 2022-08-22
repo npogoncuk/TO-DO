@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.to_do.databinding.FragmentSecondBinding
 import com.example.to_do.model.Note
-import com.google.android.material.snackbar.Snackbar
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -43,15 +42,12 @@ class SecondFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.detail_note_menu, menu)
     }
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
-            R.id.action_settings -> {
-                Snackbar.make(requireView(), "Settings", Snackbar.LENGTH_LONG).show()
-                true
-            }
             R.id.action_save_note -> {
                 if (binding.text.text.isNotEmpty()) {
                     val note = Note(text = binding.text.text.toString(), timeStamp = System.currentTimeMillis(), done = false)

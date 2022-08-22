@@ -1,13 +1,21 @@
 package com.example.to_do.screens.main
 
 import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
@@ -15,9 +23,11 @@ import com.example.to_do.App
 import com.example.to_do.R
 import com.example.to_do.model.Note
 
-class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
+class Adapter(private val liveDataToObserve: LiveData<Drawable>, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
 
-    inner class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class NoteViewHolder(itemView: View, liveData: LiveData<Drawable>, lifecycle: LifecycleOwner)
+        : RecyclerView.ViewHolder(itemView) {
+        val row: LinearLayout = itemView.findViewById(R.id.linear_layout_row)
         private val textView = itemView.findViewById<TextView>(R.id.note_text)
         private val completed = itemView.findViewById<CheckBox>(R.id.completed)
         private val delete = itemView.findViewById<View>(R.id.delete)
@@ -37,6 +47,10 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
             itemView.setOnClickListener {
                 (itemView.context as Activity).findNavController(R.id.nav_host_fragment_content_main)
                     .navigate(R.id.action_FirstFragment_to_SecondFragment, Bundle().apply { putParcelable("note", note) })
+            }
+
+            liveData.observe(lifecycle) {
+                row.background = it
             }
         }
         private var silentUpdate = true
@@ -80,8 +94,9 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
 
     })
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.NoteViewHolder {
+        val holder = NoteViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false), liveDataToObserve, lifecycleOwner)
+        return holder
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {

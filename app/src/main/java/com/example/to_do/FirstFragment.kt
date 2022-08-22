@@ -14,7 +14,6 @@ import com.example.to_do.screens.main.MainViewModel
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
-
     private val binding get() = _binding!!
 
     private val viewMode: MainViewModel by viewModels()
@@ -29,7 +28,7 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.list.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        binding.list.adapter = Adapter()
+        binding.list.adapter = Adapter(viewMode.getCol(), viewLifecycleOwner)
         viewMode.notesLiveData.observe(viewLifecycleOwner) {
             (binding.list.adapter as Adapter).setItems(it)
         }
