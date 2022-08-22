@@ -1,16 +1,15 @@
-package com.example.to_do
+package com.example.to_do.screens.detail
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.to_do.App
+import com.example.to_do.R
 import com.example.to_do.databinding.FragmentSecondBinding
 import com.example.to_do.model.Note
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
 class SecondFragment : Fragment() {
     private val args: SecondFragmentArgs by navArgs()
     private var _binding: FragmentSecondBinding? = null

@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.to_do.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:name="com.example.to_do.screens.main.FirstFragment"
+        android:label="TO-DO"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -17,8 +17,8 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.to_do.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:name="com.example.to_do.screens.detail.SecondFragment"
+        android:label="Add task"
         tools:layout="@layout/fragment_second">
 
         <action

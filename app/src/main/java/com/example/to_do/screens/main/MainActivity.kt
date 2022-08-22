@@ -1,4 +1,4 @@
-package com.example.to_do
+package com.example.to_do.screens.main
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,8 +13,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.to_do.R
 import com.example.to_do.databinding.ActivityMainBinding
-import com.example.to_do.screens.main.MainViewModel
+import com.example.to_do.screens.detail.SecondFragment
 
 private const val TAG = "main activity"
 class MainActivity : AppCompatActivity(), SecondFragment.VisibleFab {
@@ -42,15 +43,11 @@ class MainActivity : AppCompatActivity(), SecondFragment.VisibleFab {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.default_color -> {
                 viewModel.colorOfTasks.value = ColorDrawable(Color.BLACK)

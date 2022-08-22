@@ -1,8 +1,6 @@
 package com.example.to_do.screens.main
 
 import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -12,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
@@ -27,7 +23,7 @@ class Adapter(private val liveDataToObserve: LiveData<Drawable>, private val lif
 
     inner class NoteViewHolder(itemView: View, liveData: LiveData<Drawable>, lifecycle: LifecycleOwner)
         : RecyclerView.ViewHolder(itemView) {
-        val row: LinearLayout = itemView.findViewById(R.id.linear_layout_row)
+        private val row: LinearLayout = itemView.findViewById(R.id.linear_layout_row)
         private val textView = itemView.findViewById<TextView>(R.id.note_text)
         private val completed = itemView.findViewById<CheckBox>(R.id.completed)
         private val delete = itemView.findViewById<View>(R.id.delete)
@@ -95,8 +91,11 @@ class Adapter(private val liveDataToObserve: LiveData<Drawable>, private val lif
     })
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.NoteViewHolder {
-        val holder = NoteViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false), liveDataToObserve, lifecycleOwner)
-        return holder
+        return NoteViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false),
+            liveDataToObserve,
+            lifecycleOwner
+        )
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
