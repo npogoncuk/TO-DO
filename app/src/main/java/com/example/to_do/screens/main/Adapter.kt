@@ -2,7 +2,6 @@ package com.example.to_do.screens.main
 
 import android.app.Activity
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
@@ -19,9 +16,10 @@ import com.example.to_do.App
 import com.example.to_do.R
 import com.example.to_do.model.Note
 
-class Adapter(private val liveDataToObserve: LiveData<Drawable>, private val lifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
+class Adapter(private val observeBackgroundChange: ((v: View)->Unit)) : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
 
-    inner class NoteViewHolder(itemView: View, liveData: LiveData<Drawable>, lifecycle: LifecycleOwner)
+
+    inner class NoteViewHolder(itemView: View)
         : RecyclerView.ViewHolder(itemView) {
         private val row: LinearLayout = itemView.findViewById(R.id.linear_layout_row)
         private val textView = itemView.findViewById<TextView>(R.id.note_text)
@@ -45,9 +43,11 @@ class Adapter(private val liveDataToObserve: LiveData<Drawable>, private val lif
                     .navigate(R.id.action_FirstFragment_to_SecondFragment, Bundle().apply { putParcelable("note", note) })
             }
 
-            liveData.observe(lifecycle) {
-                row.background = it
-            }
+//            liveData.observe(lifecycle) {
+//                row.background = it
+//            }
+            observeBackgroundChange.invoke(row)
+
         }
         private var silentUpdate = true
 
@@ -92,9 +92,7 @@ class Adapter(private val liveDataToObserve: LiveData<Drawable>, private val lif
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.NoteViewHolder {
         return NoteViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false),
-            liveDataToObserve,
-            lifecycleOwner
+            LayoutInflater.from(parent.context).inflate(R.layout.item_note_list, parent, false)
         )
     }
 

@@ -50,20 +50,24 @@ class MainActivity : AppCompatActivity(), SecondFragment.VisibleFab {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.default_color -> {
-                viewModel.colorOfTasks.value = ColorDrawable(Color.BLACK)
-                Log.d(TAG, "onOptionsItemSelected: default color selected")
+                Log.d(TAG, "onOptionsItemSelected: default color selected ... ${(viewModel.colorOfTasks.value as ColorDrawable).color}")
+                viewModel.colorOfTasks.value = ColorDrawable(Color.RED)
+                Log.d(TAG, "onOptionsItemSelected: default color selected ... ${(viewModel.colorOfTasks.value as ColorDrawable).color}")
                 true
             }
             R.id.orange -> {
                 viewModel.colorOfTasks.value = ColorDrawable(Color.BLACK)
+                Log.d(TAG, "onOptionsItemSelected: orange selected")
                 true
             }
             R.id.blue -> {
                 viewModel.colorOfTasks.value = ColorDrawable(Color.BLACK)
+                Log.d(TAG, "onOptionsItemSelected: blue selected")
                 true
             }
             R.id.green -> {
                 viewModel.colorOfTasks.value = ColorDrawable(Color.BLACK)
+                Log.d(TAG, "onOptionsItemSelected:green selected")
                 true
             }
             else -> super.onOptionsItemSelected(item)

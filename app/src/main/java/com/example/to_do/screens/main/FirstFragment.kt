@@ -8,15 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.to_do.databinding.FragmentFirstBinding
-import com.example.to_do.screens.main.Adapter
-import com.example.to_do.screens.main.MainViewModel
 
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
 
-    private val viewMode: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,9 +26,15 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.list.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
-        binding.list.adapter = Adapter(viewMode.getCol(), viewLifecycleOwner)
-        viewMode.notesLiveData.observe(viewLifecycleOwner) {
+        binding.list.adapter = Adapter(::makeObserveViewHolder)
+        viewModel.notesLiveData.observe(viewLifecycleOwner) {
             (binding.list.adapter as Adapter).setItems(it)
+        }
+    }
+
+    private fun makeObserveViewHolder(view: View) {
+        viewModel.colorOfTasks.observe(viewLifecycleOwner) {
+            view.background = it
         }
     }
 
