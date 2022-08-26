@@ -8,13 +8,13 @@
         app:showAsAction="never" >
         <menu>
             <item android:id="@+id/default_color"
-                android:title="Default" />
-            <item android:id="@+id/orange"
-                android:title="Orange" />
+                android:title="@string/default_color" />
+            <item android:id="@+id/yellow"
+                android:title="@string/yellow" />
             <item android:id="@+id/blue"
-                android:title="Blue" />
+                android:title="@string/blue" />
             <item android:id="@+id/green"
-                android:title="Green" />
+                android:title="@string/green" />
         </menu>
     </item>
 </menu>

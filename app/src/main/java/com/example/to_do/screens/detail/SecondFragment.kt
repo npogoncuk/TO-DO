@@ -14,8 +14,6 @@ class SecondFragment : Fragment() {
     private val args: SecondFragmentArgs by navArgs()
     private var _binding: FragmentSecondBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
